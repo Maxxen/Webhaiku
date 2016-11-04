@@ -3,7 +3,7 @@
 $(document).ready(function () {
     var rawJSON;
     var playlistArray = new Array();
-    var playlist = "http://www.youtube.com/embed?playlist="
+    var playlist = "https://www.youtube.com/embed?playlist="
     var currentVideo = 0;
     var player;
 
