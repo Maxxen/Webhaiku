@@ -2,14 +2,40 @@
 body {
     height: 100%;
     margin:0;
+    background-color: maroon;
+    
 }
 
+h1 {
+    text-align: center;
+    color:white;
+    font-family:sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin:0;
+}
 html {
     height: 100%;
+}
+
+.splitter {
+    width:50%;
+    margin:10px;
+    border:4px solid white;
 }
 
 #videoWrapper {
     position:absolute;
     height:100%;
     width:100%;
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+iframe {
+    border:3px solid white;
+    max-width: 50%;
+    max-height:50%;
 }

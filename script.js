@@ -31,13 +31,13 @@ $(document).ready(function () {
             playlistArray.push((youtube_parser(url)));
         }
     }
-    
+
     playlist = playlist + playlistArray.join(",");
 
-    
+
     console.log(playlistArray.join(","));
-    
+
     console.log(playlistArray[0]);
-    
-    $("#videoWrapper").html('<iframe id="player" width="100%" height="100%" src="'+playlist+'"></iframe>')
+
+    $("#videoWrapper iframe").attr("src", playlist);
 });
