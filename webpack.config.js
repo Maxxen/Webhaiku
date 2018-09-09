@@ -18,7 +18,8 @@ var config = {
                 include: SRC_DIR,
                 loader: "babel-loader",
                 query: {
-                    presets: ["react", "env"]
+                    presets: ["react", "env"],
+                    plugins: ["transform-object-rest-spread"]
                 }
             },
             {
