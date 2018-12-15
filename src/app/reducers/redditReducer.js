@@ -17,6 +17,5 @@ export default function reducer(state = {
             return {...state, fetching: false, fetched: true, videos: action.payload}
         }
     }
-
     return state;
 }

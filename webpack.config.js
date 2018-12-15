@@ -14,7 +14,7 @@ var config = {
     module: {
         rules: [
             {
-                test: /\.js?/,
+                test: /\.jsx?$/,
                 include: SRC_DIR,
                 loader: "babel-loader",
                 query: {
@@ -36,6 +36,9 @@ var config = {
                 }
             }
         ]
+    },
+    resolve: {
+      extensions: [".js", ".jsx"],
     }
 }
 
