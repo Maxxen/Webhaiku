@@ -1,27 +1,29 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import VideoQueueItem from "./VideoQueueItem";
+import VideoCard from "./VideoCard";
 
 class VideoQueue extends React.Component {
     
     render(){
+
         const { videos, loading } = this.props;
-        if(loading){
-            return <div>Loading...</div>;
-        }
-        else {
-            const videoItems = videos.map( (item, index) =>
-                                           <VideoQueueItem key={index} name={item}/>);
-            return(
-                <div>
-                  Videos:
-                  <ul> {videoItems} </ul>
-                </div>                
-            );
-        }
+        
+        let content = loading ? "Loading..." : renderItems(videos);
+        
+        return <div> {content} </div>;
     }
 }
+
+const renderItems = (videos) => {
+    return <ul>
+             {videos.map( (item, index) =>
+                          <li key={index}>
+                            <VideoCard videoData={item}/>
+                          </li>
+                        )}
+           </ul>;
+};
 
 const mapStateToProps = state => ({
     videos: state.reddit.videos,

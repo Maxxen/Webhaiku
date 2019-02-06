@@ -1,5 +1,5 @@
 export default function reducer(state = {
-    videos: [],
+    videos: [{title: "", thumb: "", id: 0}],
     fetching: false,
     fetched: true,
     error: null
@@ -7,7 +7,7 @@ export default function reducer(state = {
     action) {
     
     switch (action.type) {
-        case "FETCH_VIDEOS": {
+        case "FETCH_VIDEOS_BEGIN": {
             return {...state, fetching: true};
         }
         case "FETCH_VIDEOS_REJECTED": {
