@@ -49,9 +49,9 @@ export interface RedditMedia {
     provider_url: string;
     version: number;
     title: string;
-    type:	"video" | string;
+    type: "video" | string;
     thumbnail_width: number;
-    height:	number;
+    height: number;
     width: number;
     html: string;
     author_name: string;

@@ -1,11 +1,9 @@
-import React, { Dispatch, useState} from 'react';
+import React, { Dispatch, useState } from 'react';
 import axios from "axios";
 import './App.css';
 import { RedditResponse, RedditPost, RedditLink, RedditMedia } from './RedditResponse';
-import { useStore, Action} from './Store';
-
-
-
+import { useStore, Action } from './Store';
+import { VideoPlayer } from './VideoPlayer';
 
 const App: React.FC = () => {
 
@@ -17,24 +15,24 @@ const App: React.FC = () => {
         <h1>Web-Haiku</h1>
       </header>
       <main>
-        {VideoPlayer({})}
+        {VideoPlayer(state.videos)}
         {SearchBar(dispatch)}
         {VideoList(state.videos)}
       </main>
-    </div>
+    </div> 
   );
 }
 
 
-const ParseVideos : (res: RedditResponse) => Video[] = (res) => {
+const ParseVideos: (res: RedditResponse) => Video[] = (res) => {
   let videos: Video[] = []
-  if(res.kind = "Listing"){
+  if (res.kind = "Listing") {
     res.data.children.map((post: RedditPost) => {
-      if(post.kind == "t3" 
-      && post.data.media != null 
-      && post.data.media.type == "youtube.com"){
+      if (post.kind == "t3"
+        && post.data.media != null
+        && post.data.media.type == "youtube.com") {
         let videoId = ParseID(post.data.url);
-        if(videoId != false) {
+        if (videoId != false) {
           videos.push({
             title: post.data.media.oembed.title,
             id: videoId,
@@ -50,7 +48,7 @@ const ParseVideos : (res: RedditResponse) => Video[] = (res) => {
   return videos;
 }
 
-const ParseID : (url: string) => string | false = (url) => {
+const ParseID: (url: string) => string | false = (url) => {
   var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
   var match = url.match(regExp);
   return (match && match[7].length == 11) ? match[7] : false;
@@ -65,43 +63,36 @@ export interface Video {
   postedBy: string;
 }
 
-const VideoPlayer: React.FC = () => {
-  return (
-  <div>
-    
-  </div>
-  )
-}
 
 const SearchBar: React.FC<Dispatch<Action>> = (dispatch: Dispatch<Action>) => {
 
   const [value, setValue] = useState("");
 
   const fetch = async () => {
-    dispatch({type: "FETCH_VIDEOS_BEGIN"})
+    dispatch({ type: "FETCH_VIDEOS_BEGIN" })
     try {
       const result = await axios(value + ".json");
       const videoData = ParseVideos(result.data);
-      dispatch({type: "FETCH_VIDEOS_SUCCESS", payload: videoData});
-    } 
+      dispatch({ type: "FETCH_VIDEOS_SUCCESS", payload: videoData });
+    }
     catch (error) {
-      dispatch({type: "FETCH_VIDEOS_FAILURE"});
+      console.log(error);
+      dispatch({ type: "FETCH_VIDEOS_FAILURE" });
     }
   }
 
   return (
     <div>
-      <input type="text" 
-      name="reddit url"
-      onChange={
-        (event: React.ChangeEvent<HTMLInputElement>) => 
-          {setValue(event.target.value)}
-      }
+      <input type="text"
+        name="reddit url"
+        onChange={
+          (event: React.ChangeEvent<HTMLInputElement>) => { setValue(event.target.value) }
+        }
       />
-      <input 
-        type="button" 
-        value="fetch" 
-        onClick={(event: React.MouseEvent<HTMLElement>) => {fetch()}}
+      <input
+        type="button"
+        value="fetch"
+        onClick={(event: React.MouseEvent<HTMLElement>) => { fetch() }}
       />
     </div>
   )
@@ -121,14 +112,14 @@ const VideoList: React.FC<Video[]> = (videos: Video[]) => {
 
 const VideoCard: React.FC<Video> = (video: Video, key: number) => {
   return (
-  <li key = {key}>
-    <h3>{video.title}</h3>
-    <span>{video.id}</span>
-    <div>
-      Score: <span>{video.score}</span>
-    </div>
-    <img src={video.thumb} alt="thumbnail"/>>
-  </li>
+    <li key={key}>
+      <h3>{video.title}</h3>
+      <span>{video.id}</span>
+      <div>
+        Score: <span>{video.score}</span>
+      </div>
+      <img src={video.thumb} alt="thumbnail" />>
+        </li>
   );
 }
 
