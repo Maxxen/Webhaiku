@@ -1,5 +1,5 @@
 import React, { useContext, createContext, useReducer, Dispatch} from "react";
-import { Video } from "./App";
+import { Video } from "../Types/Video";
 
 
 
@@ -7,6 +7,7 @@ export interface State {
   loading: boolean;
   videos: Video[];
 }
+
 const initialState : State = {
   loading: false,
   videos: []
